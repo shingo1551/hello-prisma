@@ -27,7 +27,7 @@ async function main1() {
 }
 
 //
-async function main() {
+async function main2() {
   const post = await prisma.post.update({
     where: { id: 1 },
     data: { published: true },
@@ -36,7 +36,7 @@ async function main() {
 }
 
 //
-main()
+main1()
   .catch((e) => {
     throw e
   })
