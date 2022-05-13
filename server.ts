@@ -18,6 +18,22 @@ server.get('/allUsers', async (request, reply) => {
   return allUsers
 })
 
+server.get('/createUser', async (request, reply) => {
+  const data = {
+    data: {
+      name: 'Alice',
+      email: 'alice@prisma.io',
+      posts: {
+        create: { title: 'Hello World' },
+      },
+      profile: {
+        create: { bio: 'I like turtles' },
+      },
+    },
+  }
+  return await prisma.user.create(data)
+})
+
 server.listen(8080, async (err, address) => {
   if (err) {
     console.error(err)
