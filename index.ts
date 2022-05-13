@@ -1,8 +1,20 @@
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient({
-  log: ['query', 'info', 'warn', 'error'],
+  // log: ['query', 'info', 'warn', 'error'],
+  log: ['info', 'warn', 'error'],
 })
+
+//
+async function main() {
+  const allUsers = await prisma.user.findMany({
+    include: {
+      posts: true,
+      profile: true,
+    },
+  })
+  console.dir(allUsers, { depth: null })
+}
 
 //
 async function main1() {
@@ -18,14 +30,6 @@ async function main1() {
       },
     },
   })
-
-  const allUsers = await prisma.user.findMany({
-    include: {
-      posts: true,
-      profile: true,
-    },
-  })
-  console.dir(allUsers, { depth: null })
 }
 
 //
@@ -38,7 +42,7 @@ async function main2() {
 }
 
 //
-main1()
+main()
   .catch((e) => {
     throw e
   })
