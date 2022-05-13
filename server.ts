@@ -1,11 +1,8 @@
 import fastify from 'fastify'
 const server = fastify()
 
-server.register(require('fastify-bcrypt'))
-// server.bcrypt.hash('password')
-//   .then(hash => fastify.bcrypt.compare('password', hash))
-//   .then(match => console.log(match ? 'Matched!' : 'Not matched!'))
-//   .catch(err => console.error(err.message))
+import fastifyBcrypt from 'fastify-bcrypt'
+server.register(fastifyBcrypt)
 
 //
 import { PrismaClient } from '@prisma/client'
@@ -41,9 +38,18 @@ server.get('/createUser', async (request, reply) => {
 })
 
 server.get('/updateUser', async (request, reply) => {
-  return await prisma.post.update({
+  const passwd = await server.bcrypt.hash('pa55w0rd')
+  return await prisma.user.update({
     where: { id: 1 },
-    data: { published: true },
+    data: {
+      passwd: passwd,
+      posts: {
+        update: {
+          where: { id: 1 },
+          data: { published: false }
+        }
+      }
+    }
   })
 })
 
