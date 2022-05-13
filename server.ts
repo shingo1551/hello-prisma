@@ -9,13 +9,12 @@ server.get('/ping', async (request, reply) => {
 })
 
 server.get('/allUsers', async (request, reply) => {
-  const allUsers = await prisma.user.findMany({
+  return await prisma.user.findMany({
     include: {
       posts: true,
       profile: true,
     },
   })
-  return allUsers
 })
 
 server.get('/createUser', async (request, reply) => {
@@ -32,6 +31,13 @@ server.get('/createUser', async (request, reply) => {
     },
   }
   return await prisma.user.create(data)
+})
+
+server.get('/updateUser', async (request, reply) => {
+  return await prisma.post.update({
+    where: { id: 1 },
+    data: { published: true },
+  })
 })
 
 server.listen(8080, async (err, address) => {
