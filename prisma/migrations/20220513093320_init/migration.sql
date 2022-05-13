@@ -23,7 +23,7 @@ CREATE TABLE "Profile" (
 CREATE TABLE "User" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "email" TEXT NOT NULL,
-    "passwd" TEXT NOT NULL
+    "passwd" TEXT
 );
 
 -- CreateIndex
