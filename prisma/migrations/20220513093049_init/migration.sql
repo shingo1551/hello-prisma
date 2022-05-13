@@ -13,6 +13,7 @@ CREATE TABLE "Post" (
 -- CreateTable
 CREATE TABLE "Profile" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT,
     "bio" TEXT,
     "userId" INTEGER NOT NULL,
     CONSTRAINT "Profile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
@@ -22,7 +23,7 @@ CREATE TABLE "Profile" (
 CREATE TABLE "User" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "email" TEXT NOT NULL,
-    "name" TEXT
+    "passwd" TEXT NOT NULL
 );
 
 -- CreateIndex

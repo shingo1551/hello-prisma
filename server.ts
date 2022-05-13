@@ -1,9 +1,17 @@
 import fastify from 'fastify'
 const server = fastify()
 
+server.register(require('fastify-bcrypt'))
+// server.bcrypt.hash('password')
+//   .then(hash => fastify.bcrypt.compare('password', hash))
+//   .then(match => console.log(match ? 'Matched!' : 'Not matched!'))
+//   .catch(err => console.error(err.message))
+
+//
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
+//
 server.get('/ping', async (request, reply) => {
   return 'pong\n'
 })
@@ -18,19 +26,18 @@ server.get('/allUsers', async (request, reply) => {
 })
 
 server.get('/createUser', async (request, reply) => {
-  const data = {
+  const user = {
     data: {
-      name: 'Alice',
       email: 'alice@prisma.io',
       posts: {
         create: { title: 'Hello World' },
       },
       profile: {
-        create: { bio: 'I like turtles' },
+        create: { name: 'Alice', bio: 'I like turtles' },
       },
     },
   }
-  return await prisma.user.create(data)
+  return await prisma.user.create(user)
 })
 
 server.get('/updateUser', async (request, reply) => {
